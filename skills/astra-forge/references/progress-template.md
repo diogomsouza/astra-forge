@@ -19,8 +19,8 @@ Check updates under Field Rules before dependent actions. Lifecycle and compacti
 # Astra Forge Progress: {context-id}
 
 Goal: {runtime goal identity}
-Created: {timestamp}
-Updated: {timestamp}
+Created: [YYYY-MM-DDTHH:mm:ss±HH:mm]
+Updated: [YYYY-MM-DDTHH:mm:ss±HH:mm]
 Status: {Pending | In Progress | Blocked | Ready For Final}
 
 ## Objective
@@ -49,7 +49,7 @@ Status: {Pending | In Progress | Blocked | Ready For Final}
 
 | Time | Event | Evidence / Result |
 | --- | --- | --- |
-| {timestamp} | Initialized | {goal binding and initial context} |
+| [YYYY-MM-DDTHH:mm:ss±HH:mm] | Initialized | {goal binding and initial context} |
 
 ## Next Actions
 

@@ -156,7 +156,8 @@ For each material guarantee, root specifies whether supplied evidence, simulatio
 behavior it replaces. When fixtures reproduce permissions, process context, locking, or persistent state, require a representative check of that setup before expanding
 the validation matrix. Use existing checks where sufficient; new tests remain subject to the test policy in [SKILL.md](../SKILL.md).
 
-Carry the [solution design](planning.md#discover-and-decompose) into the contract. Implementers choose local algorithms, function organization, and debugging methods that
+Carry the applicable [solution design](planning.md#discover-and-decompose) into the contract: identify relevant design sections and include the interfaces and
+invariants needed for the assignment without copying the complete document. Implementers choose local algorithms, function organization, and debugging methods that
 preserve it. Component boundaries, shared behavior placement, and dependency direction are architectural decisions even within one writer's owned files. An implementer
 may propose an alternative; root resolves it before dependent writes. Do not dictate a reviewer's findings or conclusion.
 

@@ -32,10 +32,19 @@ exclusions need a reason consistent with the user's scope.
 When material technical additions are needed, root creates `docs/PLAN-DESIGN-{context-id}.md`. Maintain one design document for the run across phases and resumes; do not
 create empty placeholders or documents per phase or decision. Record its locator in the ledger's Design field.
 
-Record only root-defined additions: component responsibilities, interfaces, dependencies, implementation decisions, material rationale, and explicit unresolved
-assumptions. Each material decision references the specification section or user instruction it serves. Reference existing requirements instead of copying them.
-Keep execution history, agent contracts, verdicts, and raw evidence out of the design. Update the relevant sections coherently, replacing superseded decisions and
-reconciling affected references; phase commits provide change history.
+Record only material decisions needed to coordinate implementation: component responsibilities, shared interfaces, dependency direction, cross-component invariants,
+and unresolved assumptions. For each decision, state its governing source, the chosen approach, and a brief rationale. Reference existing specifications, schemas,
+symbols, and tests instead of restating their contents.
+
+Keep local algorithms, implementation walkthroughs, execution instructions, agent contracts, verification results, and debugging history out of the design. Include
+detailed state transitions only when they define a shared contract or a correctness guarantee that cannot be understood from existing references.
+
+Organize decisions under stable component or concern headings. Update decisions in place and remove superseded detail; Git preserves history. Before closing an
+affected phase, consolidate duplicated rules and replace implementation detail already established in code with references. Complete these design edits before
+freezing the candidate for review under [verification](verification.md#bind-evidence-to-the-candidate).
+
+Acceptance criteria and numerical limits remain authoritative in their original sources. Reference those sources directly; do not introduce an alternative definition
+in the design.
 
 The specification and subsequent explicit user instructions govern requirements. The design guides implementation within those boundaries and never acquires authority
 to add functionality, remove obligations, relax acceptance criteria, or change exclusions. Resolve ordinary technical choices from evidence and correct design
@@ -95,8 +104,9 @@ applicable requirement.
 
 Read `SKILL.md`, this reference, and the complete matching ledger. Inspect the goal, workspace, agent identities and ownership, candidate identity, and relevant external
 state. Then load only references governing the pending action.
-Read the specification, recorded user amendments, and existing design document before reconstructing assignments or making design decisions. Reuse the recorded design
-locator; do not create another document on resume.
+Read the specification sections governing the pending work, effective user amendments, and the relevant design sections and their dependencies before reconstructing
+assignments or making design decisions. Read the complete design only when the affected scope cannot be determined or a cross-cutting change requires it. Reuse the
+recorded design locator; do not create another document on resume.
 
 Reconcile durable records against authoritative sources. Treat summaries as memory, not permission. Stop for conflicting goals, ambiguous ledgers, or unreconstructable
 critical state. Recreate a missing goal for the active objective.
