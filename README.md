@@ -75,9 +75,9 @@ Astra Forge selects each phase's verification mode and acceptance obligations be
 
 Root evidence can establish bounded, local, reversible work through reproducible checks. Material boundary changes or acceptance requiring substantive judgment need independent general review. Specialist review is added when a changed boundary presents a material failure mode that root evidence and general review cannot adequately assess. The [verification selection policy](skills/astra-forge/references/delegation.md#select-verification-before-writes) defines these modes. The same requirements apply when the lead agent implements the work.
 
-Review findings distinguish confirmed defects from missing evidence and optional improvements. Required evidence must be established before acceptance; suggestions do not automatically expand the scope. Existing checks are reused when they remain valid, and new tests are added only when explicitly required or justified as indispensable.
+Review findings distinguish confirmed defects from missing evidence and optional improvements. Required evidence must be established before acceptance; suggestions do not automatically expand the scope. Corrections continue with the same reviewer when the assignment is unchanged, and unaffected review evidence is retained with a brief justification instead of repeating the entire review portfolio. Existing checks are reused when they remain valid, and new tests are added only when explicitly required or justified as indispensable.
 
-This gives the implementation a defined correction loop: identify the failed obligation, fix it within scope, and verify the affected result. Unresolved blockers remain visible in the progress record.
+This gives the implementation a defined correction loop: identify the failed obligation, fix it within scope, and verify the affected result. If the same guarantee fails again after a correction, the lead agent revisits the underlying assumption and equivalent paths before another attempt, briefly recording the corrected rule in the existing ledger. Unresolved blockers remain visible in the progress record.
 
 ## A record that supports the next session
 
@@ -95,7 +95,7 @@ On resume, Astra reconciles these records with the actual workspace, goal, and a
 
 ## Try it on your next implementation
 
-With the skill and required agent roles available in Codex, select **GPT-6 Astra** as the primary model and describe the outcome:
+With the skill and required agent roles available in Codex, **GPT-6 Astra** is the recommended primary model. Other primary models require explicit skill invocation; delegated work still follows the configured model policy. Describe the outcome:
 
 ```text
 Use $astra-forge to implement [objective] in this project.
