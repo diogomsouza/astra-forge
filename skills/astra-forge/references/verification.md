@@ -25,7 +25,7 @@ Acceptance covers all verification obligations recorded for the phase, across it
 root's implementation checks for required independent review. For independent modes:
 
 1. End implementation ownership and bind the workspace, candidate scope, baseline, evidence, relevant source requirements, and bounded review contract.
-2. Select fresh verifiers through [delegation](delegation.md), with no inherited conversation, root deliberations, prior reports, or verdicts.
+2. For new review assignments, select fresh verifiers through [delegation](delegation.md), with no inherited conversation, root deliberations, prior reports, or verdicts.
 3. Keep the candidate unchanged until every required contract returns. Replace or serialize an unavailable verifier; block if required coverage cannot be completed.
 4. After all required contracts return, inspect the diff, relevant files, and bound requirement sources once before acceptance. Resolve unexpected changes and
    revalidate affected evidence under [Correct And Revalidate](#correct-and-revalidate). An uncontrolled writer or unexplained drift prevents reliance on the review batch
@@ -49,16 +49,17 @@ Apply the [scope rules](planning.md#scope-and-changes); new specialist review st
 Before corrections, reopen affected accepted phases and return the correcting phase to `In Progress`. Review-only evidence work stays `In Review`. Root specifies the
 correction boundary and selects its executor under [delegation](delegation.md#select-the-executor), preserving the ownership-transfer rules when the writer changes.
 
-Rerun rejecting contracts and contracts whose surfaces or guarantees may be affected. Carry forward unaffected evidence only with an explicit delta-based justification;
-never present an old verdict as a review of subsequent changes.
+Reopening a phase does not require repeating its entire review portfolio. Rerun rejecting contracts and contracts whose surfaces or guarantees may be affected;
+carry forward unaffected evidence with a brief delta-based justification. Judge impact by affected guarantees, not diff size; never present an old verdict as a review
+of subsequent changes.
 
-Continue or reuse a verifier only within the same review assignment, including evidence completion and correction closure. A materially changed boundary, different
+Continue with the existing verifier when the review assignment remains the same, including evidence completion and correction closure. A materially changed boundary, different
 phase, or fresh final review requires a new identity.
 
-Continue while the next correction has scope, authority, and checkable evidence. If a correction breaks the same guarantee, findings recur across its callers or states,
-or validation repeatedly fails before exercising the target behavior, pause dependent correction work. Root must identify the missing rule or invalid assumption and
-revise the model, contract, evidence strategy, or assignment before another attempt. Record the execution decision in the ledger; update the design document under
-[planning](planning.md#specification-and-design). Repeated rejection alone justifies neither more compute nor abandonment.
+Continue while the next correction has scope, authority, and checkable evidence. If a guarantee fails again after a correction attempt, findings recur across its callers
+or states, or validation repeatedly fails before exercising the target behavior, pause dependent correction work. Before another attempt, briefly record in the existing
+ledger the invalid assumption or missing rule, the corrected rule or evidence strategy, and affected equivalent paths. Revise deficient contracts or assignments;
+update the design under [planning](planning.md#specification-and-design) only when a shared decision changes. Repeated rejection alone justifies neither more compute nor abandonment.
 
 ## Final Assurance
 

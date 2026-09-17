@@ -134,7 +134,7 @@ invariants, failure paths, and evidence obligations. Do not infer hidden instruc
 established.
 
 Escalate the recorded phase obligations and affected contracts after new risk, missing evidence, or consumer impact appears. Do not de-escalate after material writes.
-Serialize required review when capacity is limited.
+Reusing valid, unaffected evidence under [verification](verification.md#correct-and-revalidate) does not de-escalate those obligations. Serialize required review when capacity is limited.
 
 ## Build The Contract
 
