@@ -68,7 +68,7 @@ append new events; its next closure commit preserves both before replacing them 
 Final assurance follows [verification](verification.md). Before goal completion require:
 
 - every phase closed, with its checkpoint, one compacted summary, and source-coverage evidence;
-- final assurance passed for the current reproducible candidate;
+- final assurance passed for the current deliverable;
 - all implementation assignments complete, required subagents terminal, ownership released, and no pending evidence or blocker;
 - limitations and residual risks ready for the user handoff.
 
@@ -88,6 +88,6 @@ the checkpoint before retrying; do not repeat goal completion. Clear that pendin
 After verifying the checkpoint or confirming a valid skipped disposition, deliver outcome, files, validation, risks, and ledger locator. Include the goal's
 authoritative total token usage and human-friendly elapsed time when available, regardless of whether a token budget was configured; never estimate missing metrics.
 
-If interrupted between goal completion and ledger finalization, reconcile the completed goal with terminal evidence and finish that ledger update. Revalidate candidate
-identity and ownership before reemitting a pending handoff; reuse valid evidence rather than rerunning accepted work. If the candidate drifted, report the mismatch and
+If interrupted between goal completion and ledger finalization, reconcile the completed goal with terminal evidence and finish that ledger update. Check candidate
+changes and ownership before reemitting a pending handoff; reuse valid evidence rather than rerunning accepted work. If the candidate changed, report the changes and
 follow the tool's permitted goal lifecycle before further execution.

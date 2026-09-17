@@ -3,21 +3,16 @@
 ## Bind Evidence To The Candidate
 
 Root reconciles the cumulative diff, attributes changes, preserves unrelated work, and checks acceptance evidence. Route substantive review under [mandatory model
-routing](delegation.md#mandatory-model-routing). Freeze a logical snapshot of the complete candidate in the workspace before review by suspending candidate writes.
+routing](delegation.md#mandatory-model-routing). Suspend writes to the complete candidate in the workspace before review.
 Include the design document when present; it is part of the reviewed deliverable, not live coordination state. Bind the review to the specification's recorded content
 identity and explicit user amendments. Reconcile unexplained source changes before using them as acceptance authority.
 
 Independent phases may write only outside the frozen candidate and any dependencies or shared state that can affect its evidence. Root must also leave the included
 design document unchanged. If the candidate covers the whole product, pause all product writers for the review. Do not narrow required coverage to keep writers running.
 
-Prefer a project-provided identity covering the complete deliverable. Otherwise fix a deterministic identity recipe for the phase: root, reproducible scope selector,
-exclusions, canonical ordering and serialization, normalized paths, unit kinds, relevant metadata, and content digests. Compute the complete inventory and hashes in
-memory; record the recipe and current fingerprint in the ledger's Current State. Do not create snapshot copies, manifest files, or archives. Account explicitly for
-links, submodules, and external content; never silently traverse or omit them. The deliverable fingerprint excludes live coordination state; commit scope is defined in
-[lifecycle](lifecycle.md).
-
-Every deliverable addition, removal, rename, or relevant metadata or content change produces a new identity. Keep evidence attached to the identity it actually validated.
-The fingerprint detects drift; it does not prevent writes. Root must control writers and resolve any mismatch before acceptance.
+Record the workspace, review scope, and baseline in Current State, using existing project revision or artifact references when available. This skill does not require
+an additional candidate digest. Inspect the diff and relevant files, including untracked files and required ignored outputs, before review and acceptance. On resume,
+check for changes before reusing evidence. Project-required integrity checks remain applicable.
 
 ## Review A Phase
 
@@ -29,14 +24,15 @@ acceptance; apply the source authority rules in [planning](planning.md#specifica
 Acceptance covers all verification obligations recorded for the phase, across its assignments. Root authorship does not change the verification mode or substitute
 root's implementation checks for required independent review. For independent modes:
 
-1. End implementation ownership, reproduce the candidate identity, and bind the candidate, baseline, evidence, relevant source requirements, and bounded review contract.
+1. End implementation ownership and bind the workspace, candidate scope, baseline, evidence, relevant source requirements, and bounded review contract.
 2. Select fresh verifiers through [delegation](delegation.md), with no inherited conversation, root deliberations, prior reports, or verdicts.
 3. Keep the candidate unchanged until every required contract returns. Replace or serialize an unavailable verifier; block if required coverage cannot be completed.
-4. Reproduce candidate identity and recheck the bound requirement sources after every required contract returns. A mismatch, changed requirement source, uncontrolled
-   writer, or unexplained drift invalidates the review batch. Otherwise aggregate findings and classify them before authorizing one coherent correction wave.
+4. After all required contracts return, inspect the diff, relevant files, and bound requirement sources once before acceptance. Resolve unexpected changes and
+   revalidate affected evidence under [Correct And Revalidate](#correct-and-revalidate). An uncontrolled writer or unexplained drift prevents reliance on the review batch
+   until its provenance is reestablished. Otherwise aggregate findings and classify them before authorizing one coherent correction wave.
 
 Verifiers inspect behavior, consumers, failure paths, and evidence within their contracts. They may investigate suspected drift and report it; root owns the final binding
-decision. Do not require redundant hashing or validation merely for independence.
+decision. Do not require redundant validation merely for independence.
 
 Reject only for evidenced failure of an applicable requirement or affected guarantee. A preferred design is not a defect. Missing new tests alone is not rejection
 evidence; an indispensable missing check must identify the obligation it cannot establish and why existing checks or another concrete method are insufficient.
@@ -54,7 +50,7 @@ Before corrections, reopen affected accepted phases and return the correcting ph
 correction boundary and selects its executor under [delegation](delegation.md#select-the-executor), preserving the ownership-transfer rules when the writer changes.
 
 Rerun rejecting contracts and contracts whose surfaces or guarantees may be affected. Carry forward unaffected evidence only with an explicit delta-based justification;
-never relabel an old verdict as a review of the new identity.
+never present an old verdict as a review of subsequent changes.
 
 Continue or reuse a verifier only within the same review assignment, including evidence completion and correction closure. A materially changed boundary, different
 phase, or fresh final review requires a new identity.

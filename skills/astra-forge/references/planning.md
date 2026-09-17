@@ -102,7 +102,7 @@ applicable requirement.
 
 ## Resume
 
-Read `SKILL.md`, this reference, and the complete matching ledger. Inspect the goal, workspace, agent identities and ownership, candidate identity, and relevant external
+Read `SKILL.md`, this reference, and the complete matching ledger. Inspect the goal, workspace, agent identities and ownership, candidate changes, and relevant external
 state. Then load only references governing the pending action.
 Read the specification sections governing the pending work, effective user amendments, and the relevant design sections and their dependencies before reconstructing
 assignments or making design decisions. Read the complete design only when the affected scope cannot be determined or a cross-cutting change requires it. Reuse the

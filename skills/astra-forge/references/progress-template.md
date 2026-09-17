@@ -34,7 +34,7 @@ Status: {Pending | In Progress | Blocked | Ready For Final}
 
 ## Current State
 
-- Workspace and candidate: {root, baseline, identity recipe, current fingerprint}
+- Workspace and candidate: {root, baseline, candidate scope; existing revision or artifact reference when available}
 - Active ownership: {assignment -> root or subagent runtime identity, scope, state}
 - Active contracts: {assignment -> phase reference, applicable verification obligations, essential constraints, pending evidence}
 - External state: {environment conditions or execution limits affecting the next action or resume}
@@ -92,5 +92,5 @@ Next Actions identifies the exact pending step for each actionable phase or run-
 proceeding. In a prepared `Ready For Final` snapshot, `None` is subject to the terminal checkpoint in [Complete The Run](lifecycle.md#complete-the-run); it does not prove
 persistence.
 
-On resume, identify the exact pending gate and load its governing reference. Keep terminal candidate identity, checkpoint/evidence locators, residual risks, and goal
+On resume, identify the exact pending gate and load its governing reference. Keep final candidate references, checkpoint/evidence locators, residual risks, and goal
 usage in the final event so clearing live fields does not erase recovery evidence.

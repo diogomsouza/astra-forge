@@ -3,7 +3,7 @@
 ```text
 Before working, announce in commentary: "Assigned role: {exact runtime role name}. Context: {launch-context parameter and exact configured value}."
 
-Independently verify assignment {id}, phase {phase}: {assigned phase verification obligations and bounded acceptance criteria}. Candidate: {identity, locator, baseline}.
+Independently verify assignment {id}, phase {phase}: {assigned phase verification obligations and bounded acceptance criteria}. Candidate: {workspace, scope, baseline}.
 Sources: {original requirements or clean excerpts, explicit user amendments, and relevant sections}. Design: {applicable design sections or None}.
 Evidence: {candidate-bound results and unavailable
 checks}. Review scope: {behavior, consumers, affected guarantees}. Required runtime configuration: {resolved Astra model ID}, effort {selected effort under the delegation policy}.
