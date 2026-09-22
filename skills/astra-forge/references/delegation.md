@@ -13,7 +13,7 @@ Before starting its own implementation assignment, root announces a short descri
 Repeat only when its assigned scope materially changes, not for routine continuation.
 
 Root retains orchestration responsibility while implementing. Address blockers and decisions that prevent other authorized work before continuing local implementation;
-handle coordination at natural execution boundaries without adding periodic status checks. Root may temporarily prioritize orchestration when its own implementation
+handle coordination at natural execution boundaries. Root may temporarily prioritize orchestration when its own implementation
 would delay the overall task. Do not duplicate work already assigned to a subagent.
 
 Keep in-scope diagnosis and corrections with the current implementer. Reconsider the executor when the boundary or capability needs change, or an ownership transfer
@@ -26,14 +26,18 @@ For implementation, use a general implementer by default and a specialist for co
 
 ## Model Catalog
 
-| Nickname | Runtime model ID |
-| --- | --- |
-| Lua | `gpt-5.6-luna` |
-| Terra | `gpt-5.6-terra` |
-| Sol | `gpt-5.6-sol` |
-| Astra | `gpt-6-astra` |
+| Nickname | Unsuffixed ID | Deployment ID |
+| --- | --- | --- |
+| Luna | `gpt-6-luna` | `gpt-6-luna-1` |
+| Sol | `gpt-6-sol` | `gpt-6-sol-1` |
+| Astra | `gpt-6-astra` | `gpt-6-astra-1` |
 
-Resolve nicknames to these IDs in launch configurations and assignment prompts. Use an alternative ID only after runtime confirmation that it resolves to the same model.
+Resolve each nickname to an ID that authoritative runtime metadata identifies as the required model and the target launch tool supports. The listed IDs are
+candidates, not evidence of availability. If only one is supported, use it. If both are supported, honor an explicit user or provider selection; otherwise prefer
+the unsuffixed ID. Use the exact resolved ID in launch configurations and assignment prompts.
+
+Use another alias only after runtime confirmation that it resolves to the same model. Do not infer identity or availability by adding or removing a suffix.
+If no ID is confirmed and supported, report the blocker under Launch Configuration; do not silently switch models.
 
 ## Mandatory Model Routing
 
@@ -44,7 +48,7 @@ maintenance follows [planning](planning.md#specification-and-design).
 
 Commands and validation needed to complete an assignment stay with its executor, within its scope, permissions, and ownership.
 
-Root delegates standalone exploration to Lua when delegation provides a concrete coordination or parallelism benefit.
+Root delegates standalone exploration to Luna when delegation provides a concrete coordination or parallelism benefit.
 For standalone command execution, delegation requires the same benefit and a long-running validation campaign or script expected to take minutes or hours. Root runs other 
 standalone commands directly, including quick commands.
 
@@ -54,9 +58,9 @@ Classify delegated assignments by their required result:
 
 | Required result | Model |
 | --- | --- |
-| Code/file exploration, lookup, extraction, and mechanical inspection | Lua |
-| Eligible standalone command execution | Lua |
-| Conventional implementation | Terra |
+| Code/file exploration, lookup, extraction, and mechanical inspection | Luna |
+| Eligible standalone command execution | Luna |
+| Conventional implementation | Luna |
 | Implementation requiring moderate reasoning | Sol |
 | Implementation requiring elevated reasoning | Astra |
 | General, specialist, correction, and final reviews | Astra |
@@ -66,7 +70,7 @@ command-execution routing. Classify by effects, not language.
 
 Implementers own diagnosis and technical choices within their contracts; root resolves changes to product behavior, architecture, or scope.
 
-All reviews use Astra; their reasoning obligations determine effort, not model. For implementation, use Terra when established project patterns and bounded dependencies
+All reviews use Astra; their reasoning obligations determine effort, not model. For implementation, use Luna when established project patterns and bounded dependencies
 suffice. Use Sol when moderate reasoning is needed to adapt those patterns or resolve bounded implementation choices across well-understood components. Use Astra when
 correctness requires substantial reasoning about interacting invariants, concurrency, recovery, nontrivial algorithms, or uncertain failure behavior. Prefer Astra at the
 Sol–Astra boundary.
@@ -76,7 +80,7 @@ technology labels, business importance, or a previous failure alone do not justi
 
 ### Effort Selection
 
-Lua always uses `high`. For all other models, choose the lowest effort adequate for the remaining reasoning obligations, with a minimum of `medium` for Terra and Sol. 
+Choose the lowest effort adequate for the remaining reasoning obligations, with a minimum of `medium` for Sol. 
 Assess effort within the selected model's category; higher effort must not substitute for a required model change.
 
 - `low`: localized reasoning with a defined approach, clear evidence, and few unresolved interactions.
@@ -84,7 +88,7 @@ Assess effort within the selected model's category; higher effort must not subst
 - `high`: reconcile coupled mechanisms whose local decisions affect other guarantees, requiring joint analysis of ordering, partial effects, or competing constraints.
 - `xhigh`: an exceptionally difficult bounded core requiring sustained reasoning over inseparable constraints; splitting the analysis would lose the guarantee being established.
 
-Except for Lua, before launching at `high` or `xhigh`, briefly record in the ledger which obligation makes the next lower level insufficient and the expected evidence benefit. 
+Before launching at `high` or `xhigh`, briefly record in the ledger which obligation makes the next lower level insufficient and the expected evidence benefit.
 Prior lower-effort attempts are not required.
 
 Select review effort from the review's own obligations, independently of implementation effort. Do not use `max` or `ultra` for delegated assignments.
@@ -129,9 +133,9 @@ phase obligations. Choose among:
 Substantive review is an acceptance judgment about behavior, invariants, or failure paths not already established by explicit, reproducible checks. Confirming
 ownership, candidate binding, or evidence completeness alone is not substantive review. If acceptance requires substantive review, select an independent mode.
 
-Activate specialists by concrete consequence, not technology labels. Read their available role contracts and translate applicable review dimensions into implementation
-invariants, failure paths, and evidence obligations. Do not infer hidden instructions; missing internals block only when eligibility or coverage cannot otherwise be
-established.
+Activate specialists by concrete consequence, not technology labels. Security review requires a reachable threat to an affected trust boundary that general review 
+cannot adequately assess. Read their available role contracts and translate applicable review dimensions into implementation invariants, failure paths, and evidence 
+obligations. Do not infer hidden instructions; missing internals block only when eligibility or coverage cannot otherwise be established.
 
 Escalate the recorded phase obligations and affected contracts after new risk, missing evidence, or consumer impact appears. Do not de-escalate after material writes.
 Reusing valid, unaffected evidence under [verification](verification.md#correct-and-revalidate) does not de-escalate those obligations. Serialize required review when capacity is limited.
@@ -179,17 +183,24 @@ A subagent identity belongs to one assignment and phase. Reuse it only for conti
 Descendants require root authorization of each child's scope, role, configuration, depth, and capacity; they cannot own the ledger or verify their implementation
 ancestry.
 
-Each implementer, including root, writes only within its recorded ownership. Preserve unrelated edits. For isolated work, require a base and integration delta; for
-shared work, use disjoint ownership or serialize, including commands that affect shared outputs or resources. Integrate into the cumulative workspace, never replace
-it with an agent snapshot. Before transferring ownership, obtain the prior writer's explicit release or confirm it has stopped and cannot write there. Reconcile its
-changes and pending operations, then record the new owner and notify any continuing agent before writes resume.
-Disjoint ownership does not override an active [candidate freeze](verification.md#bind-evidence-to-the-candidate).
+Each implementer, including root, writes only within its recorded ownership. Preserve unrelated edits. For isolated work, require a base and integration delta. Integrate 
+into the cumulative workspace, never replace it with an agent snapshot.
+
+Before running mutating assignments or commands concurrently, check their effective write locations and shared resources, including staging directories, temporary files, 
+generated outputs, caches, and package destinations. Different source ownership, build directories, or final output directories do not establish isolation when an 
+intermediate resource is shared. Use existing isolation options where available; otherwise serialize the conflicting operations. If isolation is uncertain, serialize until 
+it is established.
+
+Before transferring ownership, obtain the prior writer's explicit release or confirm it has stopped and cannot write there. Reconcile its changes and pending operations, 
+then record the new owner and notify any continuing agent before writes resume. Disjoint ownership does not override an active [candidate freeze](verification.md#bind-evidence-to-the-candidate).
 
 Each delegated executor carries out only the work authorized by its contract and returns evidence. Report `SPEC_GAP` when a discovery requires a contract change, `NEEDS_SPLIT` for an
 incoherent boundary, or `MISROUTED` for an unsuitable capability. Pause only dependent work; root decides and updates the contract. Implementers continue local diagnosis and
 corrections that preserve their contract boundaries.
 
-When awaiting a subagent's progress or completion, use the longest timeout permitted by the tool and higher-priority instructions.
+When awaiting a subagent's progress or completion, check for recent activity every 180 seconds; set each wait timeout to the smaller of the time remaining until the next check and 
+the maximum allowed by the tool and higher-priority instructions. At that checkpoint, missing recent activity evidence justifies one non-interrupting status request or targeted 
+diagnosis as a concrete coordination need; shorter wait timeouts alone do not.
 
 If a wait times out and no useful independent work, actionable new information, or concrete reason to intervene is available, continue waiting without requesting status. 
 Timeout expiration alone does not justify rereading files or logs, reporting unchanged progress, or declaring inactivity. Use intermediate agent messages only for concrete 

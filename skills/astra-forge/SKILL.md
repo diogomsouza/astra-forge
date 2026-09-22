@@ -2,8 +2,8 @@
 name: astra-forge
 description: >-
   Lead and implement complex or long-running work with bounded delegation, resumable state, staged verification, and phase commits. Use when independent assurance, independent
-  workstreams, or durable resume state materially helps. Avoid simple tasks unless explicitly invoked. Implicit use requires a runtime-confirmed gpt-6-astra root;
-  other models require explicit invocation.
+  workstreams, or durable resume state materially helps. Avoid simple tasks unless explicitly invoked. Implicit use requires a runtime-confirmed Astra root
+  (gpt-6-astra, gpt-6-astra-1, or confirmed alias); other models require explicit invocation.
 ---
 
 # Astra Forge
@@ -15,7 +15,7 @@ constraints. Use one orchestration workflow and a ledger dedicated to the curren
 
 ## Admission
 
-Explicit invocation admits the run. Otherwise require a runtime-confirmed `gpt-6-astra` root or confirmed alias and at least one of:
+Explicit invocation admits the run. Otherwise require a runtime-confirmed Astra root (`gpt-6-astra`, `gpt-6-astra-1`, or confirmed alias) and at least one of:
 
 - material risk that benefits from independent assurance;
 - independent workstreams that save time or improve evidence;
@@ -50,7 +50,10 @@ If admission fails, work directly without Astra Forge artifacts. Do not infer mo
 
 ## Read On Demand
 
-Read the applicable reference before its first use, and reread it after context loss or a relevant rule change. Do not preload every reference.
+Read the applicable reference before its first use. Reuse instructions already available in the current context. Reread only when the relevant instructions are unavailable 
+after context loss, the reference changed, or a concrete uncertainty requires checking the source. A new turn, phase, assignment, or tool call alone does not require rereading.
+
+Load only the sections needed for the pending action. Do not preload every reference.
 
 | Action | Required reference |
 | --- | --- |

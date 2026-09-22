@@ -41,27 +41,19 @@ the gate.
 
 ## Close And Compact
 
-Record `Accepted` after acceptance evidence passes, or `Not Applicable` after the removal conditions above are met. Include the phase outcome or removal reason, evidence,
-released ownership, and next actions, preserving the detailed Progress Log. Commit that snapshot with the phase's accepted delta, identifying the run and phase in the
-commit message. Closure requires both the disposition record and its verified commit, unless a skipped disposition applies. The ledger need not store its own commit
-hash; use Git history to locate the committed phase record on resume.
+After acceptance evidence passes, or the conditions for Not Applicable are met, prepare one closure update containing the phase disposition, released ownership, next actions, 
+and one concise phase summary. Consolidate that phase's Progress Log entries in this same update. Preserve unresolved obligations in Active contracts or Blockers And Risks 
+before removing superseded entries.
 
-Do not release dependencies on a failed or uncertain commit. Record the error and resume from the last verified checkpoint. Reuse a successful checkpoint after an
-interruption; revalidate deliverable changes made by hooks before accepting them.
+The summary identifies the phase, outcome, candidate, essential evidence, agent dispositions, and carried risks. Reference existing evidence instead of reproducing reports. 
+Record the disposition timestamp; Updated reflects the actual edit time. When reopening a phase, retain its previous summary until the next closure consolidates the old and 
+new evidence.
 
-After confirming the phase commit, replace that phase's log entries with exactly one summary row, then read back before starting any dependent phase. Without Git, compact
-after confirming the phase's acceptance or removal evidence and skipped disposition. A verified no-change closure may reuse its existing summary. Independent phases
-already running may continue; root serializes log edits.
+Read back the affected records, then commit the accepted deliverable changes and prepared ledger together under Mandatory Phase Commit. Closure requires the verified commit 
+or a valid skipped disposition. The ledger need not contain its own commit hash; Git history locates the checkpoint.
 
-The summary identifies the phase, outcome, candidate, commit or skipped disposition, essential verification evidence, agent dispositions, and carried risks. Its Evidence
-/ Result cell obeys the 500-character limit in the progress template. Keep unresolved obligations in the ledger's Active contracts or Blockers And Risks before removing
-their log entries. Do not archive removed detail or add detail-recovery checks. The summary's Time retains the latest Accepted or Not Applicable event's timestamp,
-including when compaction resumes after an interruption; Updated uses the actual compaction time. Place the summary at that historical position and preserve other
-phases' entries. Run-level events remain separate.
-
-Compaction is a working-tree update included in the next task commit, or the terminal commit for the last phase. Do not amend the phase commit containing the detailed
-log. If interrupted after commit but before compaction, complete and verify the summary before releasing dependencies. When a phase reopens, retain its prior summary and
-append new events; its next closure commit preserves both before replacing them with one updated summary.
+Do not release dependencies on a failed or uncertain commit. Preserve the prepared closure state, record the pending persistence step, and inspect the checkpoint before retrying. 
+Revalidate deliverable changes made by hooks. After verifying the checkpoint, release dependencies without a separate mandatory compaction edit or commit.
 
 ## Complete The Run
 

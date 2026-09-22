@@ -72,13 +72,11 @@ Append log rows immediately after the table's last row, before its trailing blan
 For an inapplicable field, retain its label and write `None`. Use `Unknown: {reason}` for unresolved required values, including an inaccessible specification's content
 identity. For empty Next Actions, retain the heading and use only `None` as its content.
 After a local update, read back changed fields and rows with adjacent lines to verify placement, separators, and agreement with the phase status and pending action.
-Check the complete structure at creation, resume, after compaction, and before goal completion: section order, required fields, timestamps, table continuity and columns,
-cell limits, phase summaries, and empty-section representation. Expand other local checks only when they reveal a problem.
+Check the complete structure at creation, resume, and before goal completion: required fields, phase states, ownership, pending actions, evidence references, and readable tables. After local edits or phase compaction, check the affected sections; expand the check only when a structural problem appears.
 
-Evidence / Result contains at most 500 characters per cell, including spaces and punctuation. Summarize the material result and reference longer evidence by an existing
-source path, reproducible command, or result identifier. This limit does not require preserving full output or creating an evidence file.
-Progress Log has no row limit before compaction; record only material events and identify their phase. After compaction, each closed phase has exactly one summary row
-under [Close And Compact](lifecycle.md#close-and-compact).
+Evidence / Result contains a concise statement of the material result and, when needed, an existing source path, reproducible command, or result identifier. Do not reproduce tool output or agent reports. Prefer clear wording over abbreviations or compressed text written to satisfy a character count.
+
+Record only material events that change the next action, acceptance, ownership, scope, or recovery state, and identify their phase. At closure, consolidate the phase's events into one summary under [Close And Compact](lifecycle.md#close-and-compact). Do not add a log entry for routine reads, successful unchanged checks, or status acknowledgments unless they resolve a pending obligation.
 
 Keep terminal identities, superseded candidates, and verdicts in Progress Log rather than live fields. Maintain assignment identities and ownership for coordination
 and resume; a timeout alone does not establish termination. Record required exceptional-selection justifications in Progress Log, linked to the assignment, before launch.

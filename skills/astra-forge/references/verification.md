@@ -53,8 +53,8 @@ Reopening a phase does not require repeating its entire review portfolio. Rerun 
 carry forward unaffected evidence with a brief delta-based justification. Judge impact by affected guarantees, not diff size; never present an old verdict as a review
 of subsequent changes.
 
-Continue with the existing verifier when the review assignment remains the same, including evidence completion and correction closure. A materially changed boundary, different
-phase, or fresh final review requires a new identity.
+Keep each selected verifier on the same review assignment throughout the phase, including scope updates, corrections, reopening, and closure. Replace it only if unavailable, 
+incompatible with the required role/configuration, or no longer independent.
 
 Continue while the next correction has scope, authority, and checkable evidence. If a guarantee fails again after a correction attempt, findings recur across its callers
 or states, or validation repeatedly fails before exercising the target behavior, pause dependent correction work. Before another attempt, briefly record in the existing

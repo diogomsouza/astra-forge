@@ -29,22 +29,19 @@ exclusions need a reason consistent with the user's scope.
 
 ## Specification And Design
 
-When material technical additions are needed, root creates `docs/PLAN-DESIGN-{context-id}.md`. Maintain one design document for the run across phases and resumes; do not
-create empty placeholders or documents per phase or decision. Record its locator in the ledger's Design field.
+Create `docs/PLAN-DESIGN-{context-id}.md` only when implementation needs material shared decisions not already established in the specification or existing project documentation. 
+Otherwise record `Design: None` in the ledger. Maintain at most one design document per run and record its locator in the ledger.
 
-Record only material decisions needed to coordinate implementation: component responsibilities, shared interfaces, dependency direction, cross-component invariants,
-and unresolved assumptions. For each decision, state its governing source, the chosen approach, and a brief rationale. Reference existing specifications, schemas,
-symbols, and tests instead of restating their contents.
+For each decision, include only its governing source, chosen approach, brief rationale, and affected shared contract. Relevant subjects include component responsibilities, 
+interfaces, dependency direction, cross-component invariants, and unresolved architectural assumptions. Reference existing definitions instead of reproducing them.
 
-Keep local algorithms, implementation walkthroughs, execution instructions, agent contracts, verification results, and debugging history out of the design. Include
-detailed state transitions only when they define a shared contract or a correctness guarantee that cannot be understood from existing references.
+Keep acceptance criteria and numerical limits in their authoritative sources. Record effective user amendments and their sources in the ledger; update the design only when 
+an amendment changes a shared technical decision. Keep execution status, measurements, test scheduling, approval history, agent contracts, local algorithms, and debugging 
+history out of the design.
 
-Organize decisions under stable component or concern headings. Update decisions in place and remove superseded detail; Git preserves history. Before closing an
-affected phase, consolidate duplicated rules and replace implementation detail already established in code with references. Complete these design edits before
+Update the affected decision in place when it changes. Before reviewing an affected design section, remove superseded or duplicated detail and replace explanations already 
+established in code with references. Do not edit the design merely because a phase starts, ends, or produces new validation evidence. Complete necessary design edits before 
 freezing the candidate for review under [verification](verification.md#bind-evidence-to-the-candidate).
-
-Acceptance criteria and numerical limits remain authoritative in their original sources. Reference those sources directly; do not introduce an alternative definition
-in the design.
 
 The specification and subsequent explicit user instructions govern requirements. The design guides implementation within those boundaries and never acquires authority
 to add functionality, remove obligations, relax acceptance criteria, or change exclusions. Resolve ordinary technical choices from evidence and correct design
@@ -102,8 +99,10 @@ applicable requirement.
 
 ## Resume
 
-Read `SKILL.md`, this reference, and the complete matching ledger. Inspect the goal, workspace, agent identities and ownership, candidate changes, and relevant external
-state. Then load only references governing the pending action.
+Inspect the current goal, complete matching ledger, workspace, agent identities and ownership, candidate changes, and relevant external state. Recover unavailable skill 
+instructions under `SKILL.md`'s Read On Demand rule, then load only the references governing the pending action. Revalidate execution state even when the governing 
+instructions remain available.
+
 Read the specification sections governing the pending work, effective user amendments, and the relevant design sections and their dependencies before reconstructing
 assignments or making design decisions. Read the complete design only when the affected scope cannot be determined or a cross-cutting change requires it. Reuse the
 recorded design locator; do not create another document on resume.
