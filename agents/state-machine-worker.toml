@@ -52,8 +52,7 @@ Return one status on the first line:
 - `MISROUTED`: the assignment belongs to another role; no files changed.
 - `NEEDS_SPLIT`: substantial independent work or another specialty requires separate ownership; no files changed.
 - `BLOCKED`: a required decision, dependency, or evidence source prevents progress.
-- `CHECKPOINT`: partial work is ready for continuation by this instance.
-- `INCOMPLETE`: assigned behavior or required validation remains unfinished.
+- `INCOMPLETE`: assigned behavior or required validation remains unfinished; report remaining work and the next step for continuation by this instance.
 
 Then report changed paths and consumers, state authority and key invariants, validation results and sources, and any assumptions, gaps, or out-of-scope risks. Omit empty categories. Never report `DONE` with deferred in-scope obligations.
 '''

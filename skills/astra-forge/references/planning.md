@@ -32,6 +32,9 @@ exclusions need a reason consistent with the user's scope.
 Create `docs/PLAN-DESIGN-{context-id}.md` only when implementation needs material shared decisions not already established in the specification or existing project documentation. 
 Otherwise record `Design: None` in the ledger. Maintain at most one design document per run and record its locator in the ledger.
 
+Keep assignment-local implementation details in the code; include the constraints needed to execute and validate the assignment in its contract. Those details alone
+do not justify a design document. Reuse existing requirements, code, and documentation as sources when no new shared decision is needed.
+
 For each decision, include only its governing source, chosen approach, brief rationale, and affected shared contract. Relevant subjects include component responsibilities, 
 interfaces, dependency direction, cross-component invariants, and unresolved architectural assumptions. Reference existing definitions instead of reproducing them.
 
@@ -81,8 +84,9 @@ Reserve final integration phases for behavior that cannot be established earlier
 or create a dedicated final-assurance phase under [Final Assurance](verification.md#final-assurance). A root coverage check using valid evidence needs no additional phase.
 
 For work whose correctness depends on ordering, durable state, or recovery, root defines the governing states, permitted transitions, partial effects, and evidence
-authorizing continuation or compensation. Include interruption during recovery and affected callers in the design. Unresolved platform behavior remains an explicit
-prerequisite, not an assumed guarantee.
+authorizing continuation or compensation in the applicable assignment contract, including interruption during recovery and affected callers. Reference existing
+definitions; record new material shared decisions in the design document only under [Specification And Design](#specification-and-design). Local transition details
+stay in the contract and code. Unresolved platform behavior remains an explicit prerequisite, not an assumed guarantee.
 
 Confirm P0 source coverage and decomposition, then close it through the [lifecycle](lifecycle.md) before dependent work.
 
@@ -104,9 +108,10 @@ Inspect the current goal, complete matching ledger, workspace, agent identities 
 instructions under `SKILL.md`'s Read On Demand rule, then load only the references governing the pending action. Revalidate execution state even when the governing 
 instructions remain available.
 
-Read the specification sections governing the pending work, effective user amendments, and the relevant design sections and their dependencies before reconstructing
-assignments or making design decisions. Read the complete design only when the affected scope cannot be determined or a cross-cutting change requires it. Reuse the
-recorded design locator; do not create another document on resume.
+Read the specification sections governing the pending work, effective user amendments, and, when a design document exists, its relevant sections and dependencies
+before reconstructing assignments or making design decisions. Read the complete design only when the affected scope cannot be determined or a cross-cutting change
+requires it. Reuse the recorded design locator. With `Design: None`, recover applicable constraints from existing sources and assignment contracts; resuming alone
+does not justify creating a design document.
 
 Reconcile durable records against authoritative sources. Treat summaries as memory, not permission. Stop for conflicting goals, ambiguous ledgers, or unreconstructable
 critical state. Recreate a missing goal for the active objective.

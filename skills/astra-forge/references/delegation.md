@@ -102,7 +102,7 @@ Before launching at `high` or `xhigh`, briefly record in the ledger which obliga
 Prior lower-effort attempts are not required.
 
 Select the review model and effort from the review's own reasoning obligations, independently of the implementation model and effort. Assess the affected behavior
-and guarantees, not just the size of the diff. Higher effort must not substitute for a required model change. Do not use `max` or `ultra` for delegated assignments.
+and guarantees, not just the size of the diff. Do not use `max` or `ultra` for delegated assignments.
 
 ### Launch Configuration
 
@@ -117,11 +117,10 @@ If the runtime reports a configuration mismatch, stop affected work, reconcile a
 
 ### Agent Announcements
 
-Provide the exact runtime role identifier and configured launch-context parameter and value in initial and continuation prompts. Require the first commentary message of 
-each execution, including continuations, to announce both before working, once per execution. Report the runtime role identifier, not a task label, and the context parameter 
-and exact value (`fork_turns` or the host equivalent), not the assignment's scope.
-
-Keep the original launch-context setting in continuation prompts; continuation does not reset the agent's own history.
+Provide the exact runtime role identifier and configured launch-context parameter and value in the initial assignment prompt. Require the first commentary message to
+announce both before working. Report the runtime role identifier, not a task label, and the context parameter and exact value (`fork_turns` or the host equivalent),
+not the assignment's scope. Repeat the fields and announcement only after a material change to the role or configured launch context. Unchanged continuations need
+neither; continuation does not reset the agent's own history.
 
 Verify model and effort through authoritative runtime metadata; do not request them in agent announcements.
 Announcements do not establish runtime identity.
@@ -148,7 +147,10 @@ Activate specialists by concrete consequence, not technology labels. Security re
 cannot adequately assess. Read their available role contracts and translate applicable review dimensions into implementation invariants, failure paths, and evidence 
 obligations. Do not infer hidden instructions; missing internals block only when eligibility or coverage cannot otherwise be established.
 
-Escalate the recorded phase obligations and affected contracts after new risk, missing evidence, or consumer impact appears. Do not de-escalate after material writes.
+Escalate the recorded phase obligations and affected contracts after new risk, missing evidence, or consumer impact appears. Do not relax applicable obligations after
+material writes to accommodate difficulty, cost, or rejection. Only root may remove or revise an obligation introduced by a disproven premise, after recording the
+premise, the evidence that disproves it, and the corrected contract in the ledger. Preserve authoritative requirements and all still-applicable guarantees; notify
+affected agents before dependent work resumes.
 Reusing valid, unaffected evidence under [verification](verification.md#correct-and-revalidate) does not de-escalate those obligations. Serialize required review when capacity is limited.
 
 ## Build The Contract
@@ -165,14 +167,14 @@ For delegated work, root sends a self-contained contract in the assignment messa
 - decisions that require returning to root, verification mode, and any new-test authorization.
 
 Include persistence constraints in every delegated assignment: do not create auxiliary coordination files; return findings, decisions, and evidence in the response.
-Root maintains the design document, protects the specification, and records essential execution results and pending obligations in the ledger.
+Root maintains the design document when present, protects the specification, and records essential execution results and pending obligations in the ledger.
 
 For each material guarantee, root specifies whether supplied evidence, simulation, a real mechanism, or a public workflow can establish it. Simulation cannot establish
 behavior it replaces. When fixtures reproduce permissions, process context, locking, or persistent state, require a representative check of that setup before expanding
 the validation matrix. Use existing checks where sufficient; new tests remain subject to the test policy in [SKILL.md](../SKILL.md).
 
-Carry the applicable [solution design](planning.md#discover-and-decompose) into the contract: identify relevant design sections and include the interfaces and
-invariants needed for the assignment without copying the complete document. Implementers choose local algorithms, function organization, and debugging methods that
+Carry the applicable [solution design](planning.md#discover-and-decompose) into the contract: reference relevant design sections when present or existing sources, and
+include the interfaces and invariants needed for the assignment without copying complete documents. Implementers choose local algorithms, function organization, and debugging methods that
 preserve it. Component boundaries, shared behavior placement, and dependency direction are architectural decisions even within one writer's owned files. An implementer
 may propose an alternative; root resolves it before dependent writes. Do not dictate a reviewer's findings or conclusion.
 
@@ -222,7 +224,6 @@ resolve a blocker or runtime failure, address confirmed inactivity, enforce an e
 
 Combine already available decisions and clarifications for each agent into one message. Send blockers and correctness-affecting changes promptly; do not delay them
 to collect more updates. Avoid repeating unchanged instructions or sending acknowledgment-only messages unless acknowledgment is required for the agent to proceed.
-Preserve the required role and launch-context fields in continuation prompts.
 
 Delegated execution handoffs state `DONE` when assigned execution and validation obligations pass, `INCOMPLETE` for unfinished work, or `BLOCKED` when a specific prerequisite
 prevents continuation. Independent verification uses only `ACCEPT`, `REJECT`, or `BLOCKED` under its prompt. Every handoff reports evidence, gaps, and any out-of-scope

@@ -49,13 +49,13 @@ The workflow advances through accepted outcomes. Every phase has a purpose, depe
 ```mermaid
 flowchart TD
     B[Prepare specification and progress ledger] --> C[P0: discover, design, and define phases]
-    C --> D[Accept P0, commit, and compact the log]
+    C --> D[Accept P0, compact the log, and commit]
     D --> E[Root implements; delegate parallel or specialist work]
     E --> F[Integrate and freeze the candidate for verification]
     F --> G{Do evidence and required reviews pass?}
     G -->|Defect| H["Update the contract and authorize corrections<br/>Return to implementation"]
     G -->|Missing evidence| I["Resolve the pending prerequisite<br/>Return to verification"]
-    G -->|Yes| J[Accept the phase, commit, and compact the log]
+    G -->|Yes| J[Accept the phase, compact the log, and commit]
     J --> K{Are there more phases?}
     K -->|Yes| M["Begin the next phase<br/>Return to implementation"]
     K -->|No| L[Final assurance, goal completion, and terminal commit]
@@ -64,7 +64,7 @@ flowchart TD
 1. **Understand and design.** The lead agent establishes the goal, reads the requirements, and investigates the project in an initial discovery phase, P0. It defines the solution, identifies uncertain assumptions, and maps requirements to implementation phases and acceptance evidence.
 2. **Assign and implement.** Once a phase's dependencies are accepted and recorded, the lead agent selects the executors, implementing general work itself and delegating useful parallel or specialist assignments. It records its own scope and obligations in the ledger and supplies contracts to subagents. All writers have separate ownership; delegated implementers bring architectural or scope gaps back to the lead agent for resolution.
 3. **Integrate and verify.** The lead agent combines the changes and holds the version under review stable. Validation and any required independent reviews are tied to that version, so acceptance reflects the actual deliverable.
-4. **Correct and checkpoint.** Confirmed defects lead to focused corrections and renewed verification of affected behavior. Each accepted phase is committed with its progress record before dependent work begins. The working log is then condensed for easier continuation.
+4. **Correct and checkpoint.** Confirmed defects lead to focused corrections and renewed verification of affected behavior. The lead agent consolidates the phase's log into a summary, then commits the accepted changes and prepared progress record together before dependent work begins.
 5. **Check the complete result.** The lead agent evaluates cumulative requirements coverage and interactions between phases. When valid evidence establishes the final obligations, it confirms coverage directly. Any required independent final review uses a dedicated final-assurance phase or a planned final integration phase covering those obligations. It then closes the goal and final checkpoint. The handoff explains the changes, validation, and remaining limitations.
 
 Phase checkpoints use local Git commits when a repository exists and there are changes to record. They provide a history of accepted work and a basis for recovery after interruptions.
@@ -79,7 +79,7 @@ Review findings distinguish confirmed defects from missing evidence and optional
 
 This gives the implementation a defined correction loop: identify the failed obligation, fix it within scope, and verify the affected result. If the same guarantee fails again after a correction, the lead agent revisits the underlying assumption and equivalent paths before another attempt, briefly recording the corrected rule in the existing ledger. Unresolved blockers remain visible in the progress record.
 
-Independent final review targets guarantees not established by valid phase evidence; high risk alone does not require repeating an already sufficient review. Its phase records the outstanding guarantees, the evidence gap, and acceptance evidence. Defects reopen the affected implementation phases for correction, while the final review phase waits in `Blocked`. Once corrections are accepted and committed, the same final reviewers resume against the corrected candidate and reuse unaffected evidence. Corrections owned by a final integration phase follow its own correction cycle. Completed final assurance is reused at run completion while its evidence remains valid.
+Before deciding on additional final review, the lead agent fills evidence gaps through reproducible checks within its authority and the applicable verification mode. An unavailable check remains pending; missing evidence alone does not require another reviewer. Independent final review is required for outstanding substantive judgment or an independent review obligation not yet satisfied by valid evidence. High risk alone does not require repeating an already sufficient review. Its phase records the outstanding guarantees, the evidence gap, and acceptance evidence. Defects reopen the affected implementation phases for correction, while the final review phase waits in `Blocked`. Once corrections are accepted and committed, the same final reviewers resume against the corrected candidate and reuse unaffected evidence. Corrections owned by a final integration phase follow its own correction cycle. Completed final assurance is reused at run completion while its evidence remains valid.
 
 ## A record that supports the next session
 
@@ -88,7 +88,7 @@ Long implementations need continuity. Astra Forge keeps requirements, technical 
 | Document | What it gives you |
 | --- | --- |
 | **Specification** | The source of requirements and acceptance criteria. A supplied specification is reused; otherwise, the user's requirements are captured in `docs/PLAN-SPECS-{context-id}.md`. |
-| **Design** | Material technical decisions and their rationale in `docs/PLAN-DESIGN-{context-id}.md`, created when needed and maintained across phases. |
+| **Design** | New material shared technical decisions and their rationale in `docs/PLAN-DESIGN-{context-id}.md`, created only when existing sources do not establish them. Local implementation details stay in code and assignment contracts. |
 | **Progress ledger** | The plan, phase status, active responsibilities, essential evidence, blockers, and next actions in `.astra-forge/PLAN-PROGRESS-{context-id}.md`. |
 
 The specification stays protected unless you explicitly request edits to it. Technical decisions remain traceable to the requirements they serve.

@@ -70,8 +70,12 @@ After implementation phases close, root checks cumulative coverage and interacti
 state; it need not already be accepted. When valid cumulative evidence establishes the final obligations, root confirms coverage without creating another phase or
 launching another reviewer. Reuse completed final assurance while its candidate binding and coverage remain valid.
 
-Require independent general review for final obligations not established by valid phase evidence, including unresolved guarantees of a high-risk cumulative candidate
-or material cross-phase interactions. High risk alone does not require repeating a review that already establishes those guarantees for the current candidate.
+First address evidence gaps through reproducible checks within root's authority and the applicable verification mode. Missing evidence alone does not require another
+reviewer; if a check cannot run, keep its obligation pending. These checks do not replace required independent review.
+
+Require independent general review when final obligations still need substantive judgment, or an applicable contract requires independent review not yet satisfied by
+valid evidence. Assess unresolved guarantees and cross-phase interactions under [Select Verification Before Writes](delegation.md#select-verification-before-writes).
+High risk alone does not require repeating a review that already establishes those guarantees for the current candidate.
 Add a specialist only for a changed boundary, new interaction, incomplete prior evidence, or authoritative requirement under the existing specialist-selection rules.
 Select final reviewers under the model-routing policy.
 

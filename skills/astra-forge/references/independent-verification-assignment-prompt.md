@@ -1,7 +1,8 @@
 # Independent Verification Assignment
 
 ```text
-Before working, announce in commentary: "Assigned role: {exact runtime role name}. Context: {launch-context parameter and exact configured value}."
+At the start of this assignment, announce in commentary: "Assigned role: {exact runtime role name}. Context: {launch-context parameter and exact configured value}."
+Repeat only after a material change to the role or configured launch context, not on unchanged continuations.
 
 Independently verify assignment {id}, phase {phase}: {assigned phase verification obligations and bounded acceptance criteria}. Candidate: {workspace, scope, baseline}.
 Sources: {original requirements or clean excerpts, explicit user amendments, and relevant sections}. Design: {applicable design sections or None}.

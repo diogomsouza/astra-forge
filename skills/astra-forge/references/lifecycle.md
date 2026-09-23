@@ -35,7 +35,7 @@ release. Preserve the user's index and worktree. Root serializes ledger updates 
 If the accepted delta cannot be isolated safely, block closure.
 
 Skip only with `Skipped: no task-owned changes` or `Skipped: no Git repository`, after checking the relevant condition for this checkpoint's scope. Never create an empty
-commit. Evaluate changes after preparing required closure records; do not manufacture timestamp-only updates for an already closed phase. Missing Git executable,
+commit. Evaluate changes after preparing required closure records; do not manufacture changes for an already closed phase. Missing Git executable,
 identity, permissions, failing hooks, or a commit prohibition is a blocker, not absence of a repository. Do not change Git configuration, disable hooks, or push to satisfy
 the gate.
 
@@ -46,8 +46,7 @@ and one concise phase summary. Consolidate that phase's Progress Log entries in 
 before removing superseded entries.
 
 The summary identifies the phase, outcome, candidate, essential evidence, agent dispositions, and carried risks. Reference existing evidence instead of reproducing reports. 
-Record the disposition timestamp; Updated reflects the actual edit time. When reopening a phase, retain its previous summary until the next closure consolidates the old and 
-new evidence.
+When reopening a phase, retain its previous summary until the next closure consolidates the old and new evidence.
 
 Read back the affected records, then commit the accepted deliverable changes and prepared ledger together under Mandatory Phase Commit. Closure requires the verified commit 
 or a valid skipped disposition. The ledger need not contain its own commit hash; Git history locates the checkpoint.

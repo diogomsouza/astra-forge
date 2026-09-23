@@ -1,8 +1,7 @@
 ---
 name: astra-forge
 description: >-
-  Lead complex or long-running work when delegation, independent verification, or
-  resumable execution materially helps. Avoid simple tasks unless explicitly invoked.
+  Lead complex or long-running work when delegation, independent verification, or resumable execution materially helps. Avoid simple tasks unless explicitly invoked.
 ---
 
 # Astra Forge
@@ -19,8 +18,9 @@ constraints. Use one orchestration workflow and a ledger dedicated to the curren
   All implementers choose technical details, diagnose failures, and correct their work within those boundaries. Delegated implementers return to root when a discovery
   requires changing the contract, shared architecture, or ownership.
   Independent reviewers judge evidence within their contracts; root decides the response to findings and cannot prescribe a favorable verdict.
-- Keep execution state in the current run's ledger and technical additions in one [design document](references/planning.md#specification-and-design). Preserve the
-  specification as a protected source. These are the only run documents; create the specification only when none is supplied. Do not create other coordination files
+- Keep execution state in the current run's ledger. Record new material shared technical decisions in at most one
+  [design document](references/planning.md#specification-and-design), when needed. Preserve the specification as a protected source. These are the only run documents;
+  create the specification only when none is supplied. Do not create other coordination files
   in any directory, including contracts, review reports, evidence bundles, manifests, or archives. Tool outputs are permitted only when needed to run the tools or
   produce task deliverables under project conventions. Do not persist console captures or reports solely to retain coordination or review evidence.
 - Resolve routine technical choices from evidence. Ask only for a missing decision that cannot reasonably be inferred and materially affects scope, correctness, or
@@ -52,6 +52,8 @@ Load only the sections needed for the pending action. Do not preload every refer
 | Integrate, review, or correct a candidate | [Verification](references/verification.md) |
 | Transition, commit, close a phase, or finish | [Lifecycle](references/lifecycle.md) |
 
-When composing a delegated assignment, also read its single prompt pattern: [exploration](references/exploration-assignment-prompt.md),
-[command execution](references/command-assignment-prompt.md), [implementation](references/implementation-assignment-prompt.md), or
+When composing a delegated assignment, also read its single prompt pattern: 
+[exploration](references/exploration-assignment-prompt.md),
+[command execution](references/command-assignment-prompt.md), 
+[implementation](references/implementation-assignment-prompt.md), or
 [independent verification](references/independent-verification-assignment-prompt.md).

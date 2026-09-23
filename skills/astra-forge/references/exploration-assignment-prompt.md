@@ -1,7 +1,8 @@
 # Exploration Assignment
 
 ```text
-Before working, announce in commentary: "Assigned role: {exact runtime role name}. Context: {launch-context parameter and exact configured value}."
+At the start of this assignment, announce in commentary: "Assigned role: {exact runtime role name}. Context: {launch-context parameter and exact configured value}."
+Repeat only after a material change to the role or configured launch context, not on unchanged continuations.
 
 Investigate {bounded question} for phase {phase}, assignment {id}. Read-only scope: {paths or systems}. Requirements and relevant sources: {locators and sections}.
 Collection instructions: {search targets, facts to extract, and stopping condition}.

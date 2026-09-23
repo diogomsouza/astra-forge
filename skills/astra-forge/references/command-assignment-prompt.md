@@ -1,7 +1,8 @@
 # Command Execution Assignment
 
 ```text
-Before working, announce in commentary only: "Assigned role: {exact runtime role name}. Context: {launch-context parameter and exact configured value}."
+At the start of this assignment, announce in commentary: "Assigned role: {exact runtime role name}. Context: {launch-context parameter and exact configured value}."
+Repeat only after a material change to the role or configured launch context, not on unchanged continuations.
 
 Execute assignment {id} for phase {phase} using {resolved Luna model ID}, effort {selected effort under the delegation policy}. Working directory and candidate:
 {path and baseline}. Commands, order, and expected results: {exact commands and success conditions}. Permitted effects and ownership:
