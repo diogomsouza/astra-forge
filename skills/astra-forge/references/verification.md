@@ -66,15 +66,25 @@ update the design under [planning](planning.md#specification-and-design) only wh
 
 ## Final Assurance
 
-After implementation phases close, review cumulative coverage and interactions. A final integration phase, when planned, performs this work within its own `In Review`
-state; it need not already be accepted.
+After implementation phases close, root checks cumulative coverage and interactions. A planned final integration phase performs this work within its own `In Review`
+state; it need not already be accepted. When valid cumulative evidence establishes the final obligations, root confirms coverage without creating another phase or
+launching another reviewer. Reuse completed final assurance while its candidate binding and coverage remain valid.
 
-Require fresh independent general review for a high-risk cumulative candidate or a material cross-phase interaction not settled by phase evidence. Add a specialist only
-for a changed boundary, new interaction, incomplete prior evidence, or authoritative requirement. Otherwise root confirms coverage from valid cumulative evidence; any
-additional substantive review follows the model-routing policy.
+Require independent general review for final obligations not established by valid phase evidence, including unresolved guarantees of a high-risk cumulative candidate
+or material cross-phase interactions. High risk alone does not require repeating a review that already establishes those guarantees for the current candidate.
+Add a specialist only for a changed boundary, new interaction, incomplete prior evidence, or authoritative requirement under the existing specialist-selection rules.
+Select final reviewers under the model-routing policy.
 
-Before launching final reviewers, bind their assignments to a phase in `In Review`; create a final-assurance phase or reopen a suitable phase for evidence-only
-reevaluation when necessary.
+When independent final review is needed, use a dedicated final-assurance phase, or the planned final integration phase when it covers those obligations. Do not reopen
+an implementation phase merely to host cumulative final review. Record the outstanding guarantees, why existing evidence is insufficient, and the acceptance evidence
+in that phase's Outcome and Acceptance. Bind reviewer assignments to it in `In Review` before launch; follow the normal lifecycle to reach that state.
 
-Review the complete deliverable for final obligations without repeating unrelated accepted investigations. Final corrections reopen affected phases and require new phase
-checkpoint commits. Complete the goal only through [lifecycle](lifecycle.md).
+If final review finds defects in accepted implementation, reopen the affected implementation phases for correction and their required revalidation and checkpoint
+commits. Mark the final review phase `Blocked`, recording `In Review` as its prior state, while it awaits those corrections. After the affected phases close again,
+bind the corrected candidate and resume the same final review assignments in `In Review`, revalidating affected contracts and retaining valid unaffected evidence.
+If a final integration phase owns the correction itself, use its normal `In Progress` correction cycle instead. Reviewer replacement remains subject to
+[Correct And Revalidate](#correct-and-revalidate).
+
+Review the complete deliverable for the recorded final obligations without repeating unrelated accepted investigations. Close the final review phase through the
+normal lifecycle once its obligations pass; its accepted evidence satisfies final assurance without another review at run completion. Complete the goal only through
+[lifecycle](lifecycle.md).

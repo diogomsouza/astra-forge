@@ -11,7 +11,7 @@ before dependent work. Describing a transition in prose does not perform it. On 
 | Pending | Dependencies satisfied: enter In Progress before work. |
 | In Progress | Execution and ownership release pass: enter Done. |
 | Done | Enter In Review before acceptance validation or verifier launch. |
-| In Review | Acceptance evidence passes: enter Accepted. Candidate corrections return to In Progress. |
+| In Review | Acceptance evidence passes: enter Accepted. Corrections owned by this phase return to In Progress; awaiting corrections in another phase uses Blocked. |
 | Accepted | Phase acceptance criteria passed. |
 | Blocked | Record cause and prior activity; resume that activity after resolution, never jump directly to Accepted. |
 | Not Applicable | Phase removed consistently with current scope after resolving ownership, writes, and obligations; record the reason and checkpoint. |
@@ -20,8 +20,8 @@ Read-only discovery may move directly from `In Progress` to `In Review`. An acti
 Resolve those first, then record `Not Applicable`. Any retained deliverable changes must meet their applicable acceptance obligations.
 
 Acceptance requires mapped requirements, all recorded phase verification obligations across its assignments, released writers, and current candidate evidence where
-applicable. Reopen an accepted phase to In Progress before affecting accepted behavior; use In Review for evidence-only reevaluation. Each phase closes through the
-procedure below.
+applicable. Reopen an accepted phase to In Progress before affecting accepted behavior; use In Review for evidence-only reevaluation of its own guarantees. Cumulative
+final review follows [Final Assurance](verification.md#final-assurance). Each phase closes through the procedure below.
 
 ## Mandatory Phase Commit
 

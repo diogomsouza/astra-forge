@@ -77,7 +77,8 @@ Map each required behavior and cross-phase guarantee to one primary phase and a 
 acceptance evidence in Outcome and Acceptance. Record each phase's verification mode and complete obligations there under
 [Select Verification Before Writes](delegation.md#select-verification-before-writes). Create assignments only when dependencies permit work, choose root or a subagent
 under [Select The Executor](delegation.md#select-the-executor), and record responsibility in Active ownership.
-Reserve final integration phases for behavior that cannot be established earlier.
+Reserve final integration phases for behavior that cannot be established earlier. When independent final review is needed, assign it to that phase if its scope fits,
+or create a dedicated final-assurance phase under [Final Assurance](verification.md#final-assurance). A root coverage check using valid evidence needs no additional phase.
 
 For work whose correctness depends on ordering, durable state, or recovery, root defines the governing states, permitted transitions, partial effects, and evidence
 authorizing continuation or compensation. Include interruption during recovery and affected callers in the design. Unresolved platform behavior remains an explicit
