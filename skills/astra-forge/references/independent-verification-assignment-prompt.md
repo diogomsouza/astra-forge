@@ -5,8 +5,8 @@ Before working, announce in commentary: "Assigned role: {exact runtime role name
 
 Independently verify assignment {id}, phase {phase}: {assigned phase verification obligations and bounded acceptance criteria}. Candidate: {workspace, scope, baseline}.
 Sources: {original requirements or clean excerpts, explicit user amendments, and relevant sections}. Design: {applicable design sections or None}.
-Evidence: {candidate-bound results and unavailable
-checks}. Review scope: {behavior, consumers, affected guarantees}. Required runtime configuration: {resolved Astra model ID}, effort {selected effort under the delegation policy}.
+Evidence: {candidate-bound results and unavailable checks}. Review scope: {behavior, consumers, affected guarantees}.
+Required runtime configuration: {resolved review model ID under the delegation policy}, effort {selected effort under the delegation policy}.
 
 Start a new verification assignment without inherited conversation or prior reports/verdicts. A same-assignment continuation may retain its own prior review history.
 Do not implement changes, activate Astra Forge, access its goal or ledger, spawn descendants, or rely on another verifier's conclusion.

@@ -1,9 +1,8 @@
 ---
 name: astra-forge
 description: >-
-  Lead and implement complex or long-running work with bounded delegation, resumable state, staged verification, and phase commits. Use when independent assurance, independent
-  workstreams, or durable resume state materially helps. Avoid simple tasks unless explicitly invoked. Implicit use requires a runtime-confirmed Astra root
-  (gpt-6-astra, gpt-6-astra-1, or confirmed alias); other models require explicit invocation.
+  Lead complex or long-running work when delegation, independent verification, or
+  resumable execution materially helps. Avoid simple tasks unless explicitly invoked.
 ---
 
 # Astra Forge
@@ -12,16 +11,6 @@ Root leads and implements the work, delegates bounded assignments when useful, a
 
 Reviewing or editing this skill does not activate its workflow. User instructions take precedence over this skill within system, developer, tool, and environment
 constraints. Use one orchestration workflow and a ledger dedicated to the current run.
-
-## Admission
-
-Explicit invocation admits the run. Otherwise require a runtime-confirmed Astra root (`gpt-6-astra`, `gpt-6-astra-1`, or confirmed alias) and at least one of:
-
-- material risk that benefits from independent assurance;
-- independent workstreams that save time or improve evidence;
-- work whose duration or coordination needs justify durable resume state.
-
-If admission fails, work directly without Astra Forge artifacts. Do not infer model identity from the task, model names in files, or agent self-report.
 
 ## Operating Rules
 

@@ -60,28 +60,38 @@ Classify delegated assignments by their required result:
 | --- | --- |
 | Code/file exploration, lookup, extraction, and mechanical inspection | Luna |
 | Eligible standalone command execution | Luna |
-| Conventional implementation | Luna |
-| Implementation requiring moderate reasoning | Sol |
-| Implementation requiring elevated reasoning | Astra |
-| General, specialist, correction, and final reviews | Astra |
+| Simple implementation with a clear approach and localized effects | Luna |
+| General implementation, feature work, debugging, and refactoring within a known architecture; default implementation model | Sol |
+| Complex implementation requiring substantial reasoning about interacting guarantees | Astra |
+| Independent review requiring bounded reasoning within a known architecture; default review model | Sol |
+| Complex independent review requiring substantial reasoning about interacting guarantees | Astra |
 
 Creating or modifying project scripts is implementation. Inline, nonpersistent inspection and validation commands that leave project implementation unchanged follow 
 command-execution routing. Classify by effects, not language.
 
 Implementers own diagnosis and technical choices within their contracts; root resolves changes to product behavior, architecture, or scope.
 
-All reviews use Astra; their reasoning obligations determine effort, not model. For implementation, use Luna when established project patterns and bounded dependencies
-suffice. Use Sol when moderate reasoning is needed to adapt those patterns or resolve bounded implementation choices across well-understood components. Use Astra when
-correctness requires substantial reasoning about interacting invariants, concurrency, recovery, nontrivial algorithms, or uncertain failure behavior. Prefer Astra at the
-Sol–Astra boundary.
+Sol is the default for delegated implementation, including feature work, debugging,
+integration, and refactoring within a known architecture. Use Luna only for clearly simple assignments whose approach is evident from the requirements or an existing
+pattern, whose effects are localized and well understood, and whose completion requires little diagnosis or technical judgment. Established patterns and bounded
+dependencies alone do not qualify an assignment for Luna. Prefer Sol at the Luna–Sol boundary.
+
+Use Astra when correctness requires substantial reasoning about interacting invariants, concurrency, recovery, nontrivial algorithms, or uncertain failure behavior.
+These subjects justify Astra when their reasoning demands are central to the assignment; their mere presence does not. Prefer Astra at the Sol–Astra boundary.
+
+Sol is the default for independent review when requirements, affected behavior, consumers, and failure paths can be assessed through bounded reasoning within a known
+architecture. Use Astra when the review requires substantial reasoning about interacting invariants, concurrency, recovery, nontrivial algorithms, or uncertain failure
+behavior. Apply these criteria to general, specialist, correction, and final reviews; the review label alone does not determine the model. Prefer Astra at the Sol–Astra boundary.
 
 Select the model by assignment type before choosing effort. Where model or effort can vary, base the choice on concrete reasoning needs; file count, duration, role,
 technology labels, business importance, or a previous failure alone do not justify it.
 
 ### Effort Selection
 
-Choose the lowest effort adequate for the remaining reasoning obligations, with a minimum of `medium` for Sol. 
+Choose the effort level that matches the remaining reasoning obligations, with a minimum of `medium` for Luna.
 Assess effort within the selected model's category; higher effort must not substitute for a required model change.
+
+If diagnosis or technical choices exceed Luna's simple-implementation criteria, reassess model selection before increasing effort or continuing corrections.
 
 - `low`: localized reasoning with a defined approach, clear evidence, and few unresolved interactions.
 - `medium`: resolve interacting rules, failure paths, or bounded technical choices within a known design.
@@ -91,7 +101,8 @@ Assess effort within the selected model's category; higher effort must not subst
 Before launching at `high` or `xhigh`, briefly record in the ledger which obligation makes the next lower level insufficient and the expected evidence benefit.
 Prior lower-effort attempts are not required.
 
-Select review effort from the review's own obligations, independently of implementation effort. Do not use `max` or `ultra` for delegated assignments.
+Select the review model and effort from the review's own reasoning obligations, independently of the implementation model and effort. Assess the affected behavior
+and guarantees, not just the size of the diff. Higher effort must not substitute for a required model change. Do not use `max` or `ultra` for delegated assignments.
 
 ### Launch Configuration
 

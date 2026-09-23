@@ -2,34 +2,37 @@
 
 **Give complex implementations a clear path to completion.**
 
-Astra Forge is an orchestration skill for Codex that puts **GPT-6 Astra** in charge of taking a feature request through planning, implementation, review, and delivery. Astra defines the technical direction, implements the main work, and delegates bounded assignments when parallel execution or a specialist's method helps. It brings the result together against explicit completion criteria.
+Astra Forge is an orchestration skill for Codex that takes a feature request through planning, implementation, review, and delivery. The lead agent defines the technical direction, implements the main work, and delegates bounded assignments when parallel execution or a specialist's method helps. It brings the result together against explicit completion criteria.
 
-It is built for work that needs sustained attention: features spanning several components, changes with subtle failure paths, and implementations that continue across sessions. You provide the objective and constraints. Astra coordinates the agents, follows up on gaps, and keeps a record of what is ready, what is verified, and what still needs work.
+It is built for work that needs sustained attention: features spanning several components, changes with subtle failure paths, and implementations that continue across sessions. You provide the objective and constraints. The lead agent coordinates the agents, follows up on gaps, and keeps a record of what is ready, what is verified, and what still needs work.
 
 ## Keep the whole implementation moving
 
 A feature often spans design decisions, coordinated code changes, and integration checks. Astra Forge gives those responsibilities a common workflow, with one lead agent accountable for the result.
 
-- **A plan grounded in your project.** Astra examines the existing code and requirements, defines component responsibilities, and breaks the work into phases with observable outcomes.
-- **Focused execution.** Astra implements a single general assignment directly. When useful independent work is available, it takes one assignment and delegates others. Specialists handle cores that benefit from their methods. Every implementer has a clear scope, relevant sources, and ownership of specific files or systems.
+- **A plan grounded in your project.** The lead agent examines the existing code and requirements, defines component responsibilities, and breaks the work into phases with observable outcomes.
+- **Focused execution.** The lead agent implements a single general assignment directly. When useful independent work is available, it takes one assignment and delegates others. Specialists handle cores that benefit from their methods. Every implementer has a clear scope, relevant sources, and ownership of specific files or systems.
 - **Review built into the plan.** Verification requirements are chosen before implementation. The evidence needed to accept a phase is part of the assignment from the start.
-- **Corrections carried through.** Astra evaluates findings, coordinates fixes, and checks the affected behavior again before accepting the work.
+- **Corrections carried through.** The lead agent evaluates findings, coordinates fixes, and checks the affected behavior again before accepting the work.
 - **Progress you can inspect and resume.** A persistent ledger and phase commits connect the implementation to its decisions, validation results, and next steps.
 
 Routine technical choices stay with the agents. Questions return to you when a missing decision materially affects the approved scope or required behavior and cannot be resolved from the available sources.
 
-## Different models, coordinated by Astra
+## Model selection for delegated work
 
-Astra Forge chooses the executor before selecting models for delegated work. The lead Astra agent implements with its runtime configuration while retaining responsibility for architecture, scope, integration, and acceptance. Coordination that unblocks other agents takes priority over its local implementation.
+Astra Forge chooses the executor before selecting models for delegated work. The lead agent implements with its runtime configuration while retaining responsibility for architecture, scope, integration, and acceptance. Coordination that unblocks other agents takes priority over its local implementation.
 
 | Model | Delegated work | Delegated effort |
 | --- | --- | --- |
-| **GPT-6 Astra** | All general, specialist, correction, and final reviews; implementation requiring elevated reasoning about invariants, concurrency, recovery, algorithms, or uncertain failure behavior. | `low` through `xhigh` |
-| **GPT-5.6 Sol** | Implementation requiring moderate reasoning to adapt established patterns or resolve bounded choices across well-understood components. | `medium` through `xhigh` |
-| **GPT-5.6 Terra** | Conventional implementation where established project patterns and bounded dependencies suffice. | `medium` through `xhigh` |
-| **GPT-5.6 Luna** | Focused exploration and standalone command execution for long-running validation campaigns or scripts, when delegation helps coordination or parallel progress. | Fixed `high` |
+| **GPT-6 Astra** | Complex implementation and independent review requiring substantial reasoning about interacting invariants, concurrency, recovery, nontrivial algorithms, or uncertain failure behavior. | `low` through `xhigh` |
+| **GPT-6 Sol** | Default for delegated implementation and independent review within a known architecture, including feature work, debugging, integration, and refactoring. | `low` through `xhigh` |
+| **GPT-6 Luna** | Clearly simple implementation with an evident approach, localized effects, and little diagnosis or technical judgment; focused exploration and eligible standalone command execution. | `medium` through `xhigh` |
 
-The assignment type determines the model before effort is selected; implementation at the Sol–Astra boundary goes to Astra. Variable effort follows shared criteria within the selected model's category, using the lowest adequate level. Except for Luna, choosing `high` or `xhigh` requires a brief recorded justification; prior attempts at lower effort are unnecessary. Review effort follows the review's own obligations, independently of implementation effort. The [delegation policy](skills/astra-forge/references/delegation.md#effort-selection) defines the criteria; `max` and `ultra` are excluded from delegated work.
+The assignment type determines the model before effort is selected. Prefer Sol at the Luna–Sol boundary and Astra at the Sol–Astra boundary. Established patterns and bounded dependencies alone do not qualify implementation for Luna; reassess the model when diagnosis or technical choices exceed its simple-assignment criteria. Astra's complex-implementation criteria depend on the reasoning required, not the mere presence of a technology or topic.
+
+Review model selection follows the reasoning needed to assess requirements, affected behavior, consumers, and failure paths. Sol handles bounded reasoning within a known architecture; Astra handles complex interactions and uncertainties. The same criteria apply to general, specialist, correction, and final reviews; the review label alone does not determine the model.
+
+Effort follows shared criteria within the selected model's category, matching the remaining reasoning obligations with a minimum of `medium` for Luna. Higher effort does not substitute for a required model change. Choosing `high` or `xhigh` requires a brief recorded justification for every model; prior attempts at lower effort are unnecessary. Review model and effort follow the review's own obligations, independently of implementation model and effort, and account for affected guarantees rather than just diff size. The [delegation policy](skills/astra-forge/references/delegation.md#effort-selection) defines the criteria; `max` and `ultra` are excluded from delegated work.
 
 The role and model are selected separately. A general implementer handles ordinary application work; specialists can take on algorithmic cores or state transitions when their methods help establish correctness. General and security reviewers assess the relevant behavior independently.
 
@@ -45,27 +48,24 @@ The workflow advances through accepted outcomes. Every phase has a purpose, depe
 
 ```mermaid
 flowchart TD
-    A[Check admission and runtime goal] --> B[Prepare specification and progress ledger]
-    B --> C[P0: discover, design, and define phases]
+    B[Prepare specification and progress ledger] --> C[P0: discover, design, and define phases]
     C --> D[Accept P0, commit, and compact the log]
     D --> E[Root implements; delegate parallel or specialist work]
     E --> F[Integrate and freeze the candidate for verification]
     F --> G{Do evidence and required reviews pass?}
-    G -->|Defect| H[Update the contract and authorize corrections]
-    H --> E
-    G -->|Missing evidence| I[Resolve the pending prerequisite]
-    I --> F
+    G -->|Defect| H["Update the contract and authorize corrections<br/>Return to implementation"]
+    G -->|Missing evidence| I["Resolve the pending prerequisite<br/>Return to verification"]
     G -->|Yes| J[Accept the phase, commit, and compact the log]
     J --> K{Are there more phases?}
-    K -->|Yes| E
+    K -->|Yes| M["Begin the next phase<br/>Return to implementation"]
     K -->|No| L[Final assurance, goal completion, and terminal commit]
 ```
 
-1. **Understand and design.** Astra establishes the goal, reads the requirements, and investigates the project in an initial discovery phase, P0. It defines the solution, identifies uncertain assumptions, and maps requirements to implementation phases and acceptance evidence.
-2. **Assign and implement.** Once a phase's dependencies are accepted and recorded, Astra selects the executors, implementing general work itself and delegating useful parallel or specialist assignments. It records its own scope and obligations in the ledger and supplies contracts to subagents. All writers have separate ownership; delegated implementers bring architectural or scope gaps back to Astra for resolution.
-3. **Integrate and verify.** Astra combines the changes and holds the version under review stable. Validation and any required independent reviews are tied to that version, so acceptance reflects the actual deliverable.
+1. **Understand and design.** The lead agent establishes the goal, reads the requirements, and investigates the project in an initial discovery phase, P0. It defines the solution, identifies uncertain assumptions, and maps requirements to implementation phases and acceptance evidence.
+2. **Assign and implement.** Once a phase's dependencies are accepted and recorded, the lead agent selects the executors, implementing general work itself and delegating useful parallel or specialist assignments. It records its own scope and obligations in the ledger and supplies contracts to subagents. All writers have separate ownership; delegated implementers bring architectural or scope gaps back to the lead agent for resolution.
+3. **Integrate and verify.** The lead agent combines the changes and holds the version under review stable. Validation and any required independent reviews are tied to that version, so acceptance reflects the actual deliverable.
 4. **Correct and checkpoint.** Confirmed defects lead to focused corrections and renewed verification of affected behavior. Each accepted phase is committed with its progress record before dependent work begins. The working log is then condensed for easier continuation.
-5. **Check the complete result.** Astra evaluates cumulative requirements coverage and interactions between phases, obtains further review where needed, and closes the goal and final checkpoint. The handoff explains the changes, validation, and remaining limitations.
+5. **Check the complete result.** The lead agent evaluates cumulative requirements coverage and interactions between phases, obtains further review where needed, and closes the goal and final checkpoint. The handoff explains the changes, validation, and remaining limitations.
 
 Phase checkpoints use local Git commits when a repository exists and there are changes to record. They provide a history of accepted work and a basis for recovery after interruptions.
 
@@ -75,7 +75,7 @@ Astra Forge selects each phase's verification mode and acceptance obligations be
 
 Root evidence can establish bounded, local, reversible work through reproducible checks. Material boundary changes or acceptance requiring substantive judgment need independent general review. Specialist review is added when a changed boundary presents a material failure mode that root evidence and general review cannot adequately assess. The [verification selection policy](skills/astra-forge/references/delegation.md#select-verification-before-writes) defines these modes. The same requirements apply when the lead agent implements the work.
 
-Review findings distinguish confirmed defects from missing evidence and optional improvements. Required evidence must be established before acceptance; suggestions do not automatically expand the scope. Corrections continue with the same reviewer when the assignment is unchanged, and unaffected review evidence is retained with a brief justification instead of repeating the entire review portfolio. Existing checks are reused when they remain valid, and new tests are added only when explicitly required or justified as indispensable.
+Review findings distinguish confirmed defects from missing evidence and optional improvements. Required evidence must be established before acceptance; suggestions do not automatically expand the scope. Keep the same reviewer through scope updates and corrections while its configuration remains suitable and it remains available and independent. Reassess the configuration when new interactions or uncertainties materially change the review's reasoning obligations; rejection alone does not justify changing model or effort. Replacements preserve independence and required coverage. Unaffected review evidence is retained with a brief justification instead of repeating the entire review portfolio. Existing checks are reused when they remain valid, and new tests are added only when explicitly required or justified as indispensable.
 
 This gives the implementation a defined correction loop: identify the failed obligation, fix it within scope, and verify the affected result. If the same guarantee fails again after a correction, the lead agent revisits the underlying assumption and equivalent paths before another attempt, briefly recording the corrected rule in the existing ledger. Unresolved blockers remain visible in the progress record.
 
@@ -91,11 +91,11 @@ Long implementations need continuity. Astra Forge keeps requirements, technical 
 
 The specification stays protected unless you explicitly request edits to it. Technical decisions remain traceable to the requirements they serve.
 
-On resume, Astra reconciles these records with the actual workspace, goal, and agent state. Valid completed work can be reused, while changed or uncertain evidence is checked before execution continues.
+On resume, the lead agent reconciles these records with the actual workspace, goal, and agent state. Valid completed work can be reused, while changed or uncertain evidence is checked before execution continues.
 
 ## Try it on your next implementation
 
-With the skill and required agent roles available in Codex, **GPT-6 Astra** is the recommended primary model. Other primary models require explicit skill invocation; delegated work still follows the configured model policy. Describe the outcome:
+With the skill and required agent roles available in Codex, describe the outcome:
 
 ```text
 Use $astra-forge to implement [objective] in this project.
@@ -108,9 +108,9 @@ Use $astra-forge to implement the CSV export feature described in docs/export-sp
 Follow the existing authorization rules and preserve the current report API.
 ```
 
-You can also start from a feature description. Include the behavior you need, important constraints, and what would count as a successful result; Astra uses those sources to establish the implementation plan.
+You can also start from a feature description. Include the behavior you need, important constraints, and what would count as a successful result; the lead agent uses those sources to establish the implementation plan.
 
-The workflow requires runtime goals, subagents, and access to the configured models and roles. Explicit invocation admits a run; automatic use requires runtime confirmation of Astra as the lead agent and a task that benefits from orchestration.
+The workflow requires runtime goals, subagents, and access to the configured models and roles.
 
 Astra Forge is a good fit for features spanning multiple components, work with meaningful integration or recovery risks, and longer tasks that benefit from checkpoints. Small, straightforward edits usually need less coordination.
 

@@ -53,8 +53,11 @@ Reopening a phase does not require repeating its entire review portfolio. Rerun 
 carry forward unaffected evidence with a brief delta-based justification. Judge impact by affected guarantees, not diff size; never present an old verdict as a review
 of subsequent changes.
 
-Keep each selected verifier on the same review assignment throughout the phase, including scope updates, corrections, reopening, and closure. Replace it only if unavailable, 
-incompatible with the required role/configuration, or no longer independent.
+Keep each selected verifier on the same review assignment throughout the phase, including scope updates, corrections, reopening, and closure. Reassess the review
+configuration under [delegation](delegation.md#mandatory-model-routing) when new interactions or uncertainties materially change its reasoning obligations. Preserve
+the assigned reviewer when its configuration remains suitable; replace it only if unavailable, incompatible with the required role/configuration, or no longer
+independent. Replacements follow the same independence rules as new review assignments. A rejection alone does not justify changing the model or effort, and a
+configuration change does not reduce required review coverage.
 
 Continue while the next correction has scope, authority, and checkable evidence. If a guarantee fails again after a correction attempt, findings recur across its callers
 or states, or validation repeatedly fails before exercising the target behavior, pause dependent correction work. Before another attempt, briefly record in the existing
