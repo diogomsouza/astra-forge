@@ -20,19 +20,21 @@ Routine technical choices stay with the agents. Questions return to you when a m
 
 ## Model selection for delegated work
 
-Astra Forge chooses the executor before selecting models for delegated work. The lead agent implements with its runtime configuration while retaining responsibility for architecture, scope, integration, and acceptance. Coordination that unblocks other agents takes priority over its local implementation.
+Astra Forge chooses the executor before selecting models for delegated work. The lead agent implements with its runtime configuration while retaining responsibility for architecture, scope, integration, and acceptance. Coordination that unblocks other agents takes priority over its local implementation. For runs intended to use Sol for most development, select GPT-6.1 Sol for the lead agent at startup; delegated routing does not change that configuration.
 
 | Model | Delegated work | Delegated effort |
 | --- | --- | --- |
-| **GPT-6 Astra** | Complex implementation and independent review requiring substantial reasoning about interacting invariants, concurrency, recovery, nontrivial algorithms, or uncertain failure behavior. | `low` through `xhigh` |
-| **GPT-6 Sol** | Default for delegated implementation and independent review within a known architecture, including feature work, debugging, integration, and refactoring. | `low` through `xhigh` |
-| **GPT-6 Luna** | Clearly simple implementation with an evident approach, localized effects, and little diagnosis or technical judgment; focused exploration and eligible standalone command execution. | `medium` through `xhigh` |
+| **GPT-6.1 Sol** | Default for general and complex implementation and independent review, including feature work, debugging, integration, refactoring, and reasoning about interacting guarantees. | `low` through `max` |
+| **GPT-6 Luna** | Strictly mechanical implementation with an explicitly determined transformation and localized effects; focused exploration and eligible standalone command execution. | `medium` through `xhigh` |
+| **GPT-6 Astra** | Exceptionally demanding, irreducible implementation or independent review where a specific correctness obligation justifies why Sol at an appropriate effort up to `max` is insufficient. | `low` through `xhigh` |
 
-The assignment type determines the model before effort is selected. Prefer Sol at the Luna–Sol boundary and Astra at the Sol–Astra boundary. Established patterns and bounded dependencies alone do not qualify implementation for Luna; reassess the model when diagnosis or technical choices exceed its simple-assignment criteria. Astra's complex-implementation criteria depend on the reasoning required, not the mere presence of a technology or topic.
+Prefer Sol at both the Luna–Sol and Sol–Astra boundaries. Concurrency, recovery, nontrivial algorithms, interacting invariants, and uncertain failure behavior belong within Sol's normal scope. Use Luna for implementation only when completion requires no behavioral design, diagnosis, or nontrivial technical choices.
 
-Review model selection follows the reasoning needed to assess requirements, affected behavior, consumers, and failure paths. Sol handles bounded reasoning within a known architecture; Astra handles complex interactions and uncertainties. The same criteria apply to general, specialist, correction, and final reviews; the review label alone does not determine the model.
+Astra requires a brief justification in the existing ledger identifying the correctness obligation, Sol's expected limitation, and the expected evidence benefit. Concrete reasoning requirements or a diagnosed, unresolved reasoning gap can support escalation; size, duration, role, business importance, missing prerequisites, environmental failures, or a previous failure alone cannot. Prior Sol attempts, including attempts at `max`, are not required.
 
-Effort follows shared criteria within the selected model's category, matching the remaining reasoning obligations with a minimum of `medium` for Luna. Higher effort does not substitute for a required model change. Choosing `high` or `xhigh` requires a brief recorded justification for every model; prior attempts at lower effort are unnecessary. Review model and effort follow the review's own obligations, independently of implementation model and effort, and account for affected guarantees rather than just diff size. The [delegation policy](skills/astra-forge/references/delegation.md#effort-selection) defines the criteria; `max` and `ultra` are excluded from delegated work.
+Implementation and review select their models and efforts independently from their own reasoning obligations. The same selection criteria apply to general, specialist, correction, and final reviews; a review label does not automatically require Astra.
+
+Choose the lowest effort sufficient for the remaining obligations, with `medium` as Sol's usual starting point and Luna's minimum. Sol can use `high`, `xhigh`, or `max` as reasoning demands increase without automatically switching to Astra. Choosing `high`, `xhigh`, or `max` requires a brief recorded justification explaining why the next lower permitted level is insufficient and the expected evidence benefit; prior lower-effort attempts are unnecessary. The [delegation policy](skills/astra-forge/references/delegation.md#effort-selection) defines the criteria. `max` is permitted only for Sol; `ultra` is excluded from delegated work.
 
 The role and model are selected separately. A general implementer handles ordinary application work; specialists can take on algorithmic cores or state transitions when their methods help establish correctness. General and security reviewers assess the relevant behavior independently.
 

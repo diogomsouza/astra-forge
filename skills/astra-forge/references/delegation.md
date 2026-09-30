@@ -29,7 +29,7 @@ For implementation, use a general implementer by default and a specialist for co
 | Nickname | Unsuffixed ID | Deployment ID |
 | --- | --- | --- |
 | Luna | `gpt-6-luna` | `gpt-6-luna-1` |
-| Sol | `gpt-6-sol` | `gpt-6-sol-1` |
+| Sol | `gpt-6.1-sol` | `gpt-6.1-sol-1` |
 | Astra | `gpt-6-astra` | `gpt-6-astra-1` |
 
 Resolve each nickname to an ID that authoritative runtime metadata identifies as the required model and the target launch tool supports. The listed IDs are
@@ -60,49 +60,63 @@ Classify delegated assignments by their required result:
 | --- | --- |
 | Code/file exploration, lookup, extraction, and mechanical inspection | Luna |
 | Eligible standalone command execution | Luna |
-| Simple implementation with a clear approach and localized effects | Luna |
-| General implementation, feature work, debugging, and refactoring within a known architecture; default implementation model | Sol |
-| Complex implementation requiring substantial reasoning about interacting guarantees | Astra |
-| Independent review requiring bounded reasoning within a known architecture; default review model | Sol |
-| Complex independent review requiring substantial reasoning about interacting guarantees | Astra |
+| Strictly mechanical implementation with an explicitly determined transformation and localized effects | Luna |
+| General and complex implementation, including feature work, debugging, integration, and refactoring; default implementation model | Sol |
+| General and complex independent review; default review model | Sol |
+| Exceptionally demanding implementation or independent review meeting the Astra criteria below | Astra |
 
 Creating or modifying project scripts is implementation. Inline, nonpersistent inspection and validation commands that leave project implementation unchanged follow 
 command-execution routing. Classify by effects, not language.
 
 Implementers own diagnosis and technical choices within their contracts; root resolves changes to product behavior, architecture, or scope.
 
-Sol is the default for delegated implementation, including feature work, debugging,
-integration, and refactoring within a known architecture. Use Luna only for clearly simple assignments whose approach is evident from the requirements or an existing
-pattern, whose effects are localized and well understood, and whose completion requires little diagnosis or technical judgment. Established patterns and bounded
-dependencies alone do not qualify an assignment for Luna. Prefer Sol at the Luna–Sol boundary.
+Sol is the default for delegated implementation, including complex reasoning about interacting invariants, concurrency, recovery, nontrivial algorithms, and uncertain
+failure behavior. These subjects do not by themselves require Astra. Select Sol's effort according to the remaining reasoning obligations, up to `max`.
 
-Use Astra when correctness requires substantial reasoning about interacting invariants, concurrency, recovery, nontrivial algorithms, or uncertain failure behavior.
-These subjects justify Astra when their reasoning demands are central to the assignment; their mere presence does not. Prefer Astra at the Sol–Astra boundary.
+Use Luna for implementation only when the required transformation is explicitly determined, effects are localized and well understood, and completion requires no
+behavioral design, diagnosis, or nontrivial technical choices. An established pattern or a small diff alone does not qualify. Prefer Sol at the Luna–Sol boundary.
 
-Sol is the default for independent review when requirements, affected behavior, consumers, and failure paths can be assessed through bounded reasoning within a known
-architecture. Use Astra when the review requires substantial reasoning about interacting invariants, concurrency, recovery, nontrivial algorithms, or uncertain failure
-behavior. Apply these criteria to general, specialist, correction, and final reviews; the review label alone does not determine the model. Prefer Astra at the Sol–Astra boundary.
+Sol is also the default for independent review, including assessment of interacting guarantees and complex failure paths. Apply the same model-selection criteria
+to general, specialist, correction, and final reviews; the role or review label alone does not determine the model.
 
-Select the model by assignment type before choosing effort. Where model or effort can vary, base the choice on concrete reasoning needs; file count, duration, role,
-technology labels, business importance, or a previous failure alone do not justify it.
+Reserve Astra for an exceptionally demanding, irreducible reasoning core where root identifies a specific correctness obligation and justifies why Sol at an
+appropriate effort up to `max` is insufficient. Base that justification on concrete reasoning requirements or a diagnosed, unresolved reasoning gap.
+Before launching Astra, briefly record the obligation, Sol's expected limitation, and the expected evidence benefit in the existing ledger.
+Prior Sol attempts, including attempts at `max`, are not required. Prefer Sol at the Sol–Astra boundary.
+
+Select the model by the assignment's reasoning requirements before choosing effort. Select the review model independently of the implementation model.
+File count, duration, role, technology labels, business importance, missing prerequisites, environmental failures, or a previous failure alone do not justify Astra.
 
 ### Effort Selection
 
-Choose the effort level that matches the remaining reasoning obligations, with a minimum of `medium` for Luna.
-Assess effort within the selected model's category; higher effort must not substitute for a required model change.
+Choose the lowest effort sufficient for the remaining reasoning obligations within the selected model. Use only levels supported by the resolved model and launch tool,
+within these policy limits:
 
-If diagnosis or technical choices exceed Luna's simple-implementation criteria, reassess model selection before increasing effort or continuing corrections.
+| Model | Permitted effort |
+| --- | --- |
+| Luna | `medium`, `high`, `xhigh` |
+| Sol | `low`, `medium`, `high`, `xhigh`, `max` |
+| Astra | `low`, `medium`, `high`, `xhigh` |
+
+For Sol, use `medium` as the usual starting point when the assignment does not clearly justify another level. Increased reasoning demands can be handled with
+`high`, `xhigh`, or `max`; these levels do not by themselves require switching to Astra. Select Astra only when its exceptional model-selection criteria apply.
+
+If diagnosis or technical choices exceed Luna's mechanical-implementation criteria, reassess model selection before increasing effort or continuing corrections.
 
 - `low`: localized reasoning with a defined approach, clear evidence, and few unresolved interactions.
 - `medium`: resolve interacting rules, failure paths, or bounded technical choices within a known design.
 - `high`: reconcile coupled mechanisms whose local decisions affect other guarantees, requiring joint analysis of ordering, partial effects, or competing constraints.
 - `xhigh`: an exceptionally difficult bounded core requiring sustained reasoning over inseparable constraints; splitting the analysis would lose the guarantee being established.
+- `max`: Sol only; an exceptionally difficult bounded core whose specific correctness obligations require deeper exploration, comparison of plausible approaches, or
+  cross-checking of interacting failure models beyond what `xhigh` is expected to establish. Use only when the expected evidence benefit justifies the additional effort.
 
-Before launching at `high` or `xhigh`, briefly record in the ledger which obligation makes the next lower level insufficient and the expected evidence benefit.
-Prior lower-effort attempts are not required.
+Before launching at `high`, `xhigh`, or `max`, briefly record in the existing ledger which obligation makes the next lower permitted level insufficient and the expected
+evidence benefit. Combine this with the model-selection justification when Astra is selected. Prior lower-effort attempts are not required.
 
-Select the review model and effort from the review's own reasoning obligations, independently of the implementation model and effort. Assess the affected behavior
-and guarantees, not just the size of the diff. Do not use `max` or `ultra` for delegated assignments.
+Select review effort from the review's own reasoning obligations, independently of implementation effort. Assess the affected behavior and guarantees, not just the
+size of the diff. A rejection or failed check alone does not justify increasing effort.
+
+`max` is permitted only for Sol. Do not use `ultra` for delegated assignments.
 
 ### Launch Configuration
 
